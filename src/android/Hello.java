@@ -11,6 +11,7 @@ public class Hello extends CordovaPlugin {
 
         if (action.equals("greet")) {
 
+	    Parse.initialize(this, "mZFEv9rL3OsAdGycLS0u54PcyBxIRz56TgVCxbrf", "vWoID4z5gSZkeIM4ZrLaLB0ViGmL5MsfrFYDUjdc");
             String name = data.getString(0);
             String message = "Hello, " + name;
             callbackContext.success(message);
