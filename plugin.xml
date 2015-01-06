@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="com.example.hello"
-        version="0.7.0">
+  id="com.example.hello"
+  version="0.7.0">
 
   <name>Hello</name>
 
@@ -23,24 +23,74 @@
       </feature>
     </config-file>
 
-    <source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
-    <source-file src="src/android/lib/Parse-1.8.0.jar" target-dir="libs/"/>
-  </platform>
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <service android:name="com.parse.PushService" />
+      <receiver android:name="com.parse.ParseBroadcastReceiver">
+        <intent-filter>
+          <action android:name="android.intent.action.BOOT_COMPLETED" />
+          <action android:name="android.intent.action.USER_PRESENT" />
+        </intent-filter>
+      </receiver>
+      <receiver android:name="com.parse.ParsePushBroadcastReceiver"
+        android:exported="false">
+        <intent-filter>
+          <action android:name="com.parse.push.intent.RECEIVE" />
+          <action android:name="com.parse.push.intent.DELETE" />
+          <action android:name="com.parse.push.intent.OPEN" />
+        </intent-filter>
+      </receiver>
+      <receiver android:name="com.parse.GcmBroadcastReceiver"
+        android:permission="com.google.android.c2dm.permission.SEND">
+        <intent-filter>
+          <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+          <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-  <platform name="ios">
-    
-    <config-file target="config.xml" parent="/widget">
-      <feature name="Hello">
-        <param name="ios-package" value="HWPHello" />
-      </feature>
-    </config-file>
+    <!--
+      IMPORTANT: Change "com.parse.starter" to match your app's package name.
+    -->
+    <category android:name="com.id1efboqmlvhdjbspm7b1" />
+  </intent-filter>
+</receiver>
+</config-file>
 
-    <header-file src="src/ios/HWPHello.h" target-dir="HelloPlugin"/>
-    <source-file src="src/ios/HWPHello.m" target-dir="HelloPlugin"/>
-  </platform>
+<config-file target="AndroidManifest.xml" parent="/manifest">
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+ 
+<!--
+  IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
+  to match your app's package name + ".permission.C2D_MESSAGE".
+-->
+<permission android:protectionLevel="signature"
+    android:name="com.id1efboqmlvhdjbspm7b1.permission.C2D_MESSAGE" />
+<uses-permission android:name="com.id1efboqmlvhdjbspm7b1.permission.C2D_MESSAGE" />
+</config-file>
 
-  <platform name="wp7">
-    <source-file src="src/wp7/Hello.cs"/>
-  </platform>
+<source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
+<source-file src="src/android/lib/Parse-1.8.0.jar" target-dir="libs/"/>
+<source-file src="src/android/lib/bolts-android-1.1.4.jar" target-dir="libs/"/>
+<source-file src="src/android/lib/ParseCrashReporting-1.8.0.jar" target-dir="libs/"/>
+</platform>
+
+<platform name="ios">
+
+  <config-file target="config.xml" parent="/widget">
+    <feature name="Hello">
+      <param name="ios-package" value="HWPHello" />
+    </feature>
+  </config-file>
+
+  <header-file src="src/ios/HWPHello.h" target-dir="HelloPlugin"/>
+  <source-file src="src/ios/HWPHello.m" target-dir="HelloPlugin"/>
+</platform>
+
+<platform name="wp7">
+  <source-file src="src/wp7/Hello.cs"/>
+</platform>
 
 </plugin>
