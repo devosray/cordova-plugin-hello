@@ -3,6 +3,7 @@ package com.example.plugin;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import com.parse.Parse;
 
 public class Hello extends CordovaPlugin {
 
