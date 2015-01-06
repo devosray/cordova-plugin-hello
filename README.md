@@ -1,4 +1,6 @@
-# Cordova Hello World Plugin
+# Based on Cordova Hello World Plugin
+
+#NOTE: This is a test project to integrate Parse's Push API with Cordova. Not production ready.
 
 Simple plugin that returns your string prefixed with hello.
 
